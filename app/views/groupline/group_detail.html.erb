@@ -1,0 +1,43 @@
+<div class="container">
+  <a href="/">홈으로가기</a>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title" style="display: inline-block"><%= @detail.group_name %></h3>
+          2 / <%= @detail.group_max %>
+          <%= @detail.group_founder %>
+        </div>
+        <div class="panel-body">
+          <%= @detail.group_region %>
+          <%= @detail.group_interest %>
+          <span class="glyphicon glyphicon-thumbs-up"><% unless @detail.group_like == 0 %><%= @detail.group_like %><% end %></span>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <%= @detail.group_content %>
+        </div>
+        <div class="panel-bottom">
+          <a href="/groupline/group_like/<%= @detail.id %>"><span class="glyphicon glyphicon-thumbs-up" style="margin-top: 20px">좋아요</span></a>
+          <form action="/groupline/reply_write" method="POST">
+            <div class="input-group" style="margin-top: 10px; margin-bottom: 15px;">
+              <input type="hidden" name="group_id" value="<%= @detail.id %>">
+              <input type="text" class="form-control" placeholder="댓글을 입력하세요..." name="content">
+              <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit">댓글달기</button>
+              </span>
+            </div><!-- /input-group -->
+          </form>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <% @detail.replies.each do |p|%>
+            <%= p.reply_username %> : <%= p.reply_content %> <br>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

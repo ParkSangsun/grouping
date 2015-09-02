@@ -1,0 +1,41 @@
+{
+  "name": "chained",
+  "version": "1.0.0",
+  "homepage": "http://www.appelsiini.net/projects/chained",
+  "authors": [
+    "Mika Tuupola <tuupola@appelsiini.net>"
+  ],
+  "description": "Simple chained selects with jQuery or Zepto.",
+  "main": [
+    "jquery.chained.js",
+    "jquery.chained.remote.js"
+  ],
+  "keywords": [
+    "jquery",
+    "chained",
+    "select"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "**/*.php",
+    "**/*.html",
+    "**/*.markdown",
+    "Gruntfile.js",
+    "chained.jquery.json",
+    "package.json",
+    "node_modules",
+    "bower_components",
+    "test"
+  ],
+  "_release": "1.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.0",
+    "commit": "44a7f833643a43b602391d182088a8a82bda79c8"
+  },
+  "_source": "git://github.com/tuupola/jquery_chained.git",
+  "_target": "~1.0.0",
+  "_originalSource": "chained",
+  "_direct": true
+}

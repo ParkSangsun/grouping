@@ -1,0 +1,68 @@
+<form action="/groupline/group_create" method="POST">
+    <p>
+    그룹 이름 : <input type="text" name="group_name">
+    </p>
+    <p>
+    설립자 : <input type="text" name="group_founder">
+    </p>
+    <p>
+    그룹 최대인원 : <input type="text" name="group_max">
+    </p>
+    <p>
+    지역 : <!--<input type="text" name="group_region">-->
+    <!--<select name="group_region" id="city_id" class="form-control input-sm">
+        <option value="상봉역">상봉역</option>
+        <option value="중화역">중화역</option>
+        <option value="까치산역">까치산역</option>
+    </select>-->
+    <!--<select id="gu" name="gu">
+      <option value="">--</option>
+      <option value="jungrang">중랑구</option>
+      <option value="gwangjin">광진구</option>
+    </select>
+    <select id="station" name="station">
+      <option value="">--</option>
+      <option value="상봉역" class="jungrang">상봉역</option>
+      <option value="중화역" class="jungrang">중화역</option>
+      <option value="망우역" class="jungrang">망우역</option>
+      <option value="건대입구역" class="gwangjin">건대입구역</option>
+      <option value="어린이대공원역" class="gwangjin">어린이대공원역</option>
+      <option value="강변역" class="gwangjin">강변역</option>
+    </select>-->
+    
+    <select id="gu">
+      <option value="">--</option>
+      <option value="jungrang">중랑구</option>
+      <option value="gwangjin">광진구</option>
+    </select>
+    <select id="station" name="group_region">
+      <option value="">--</option>
+      <option value="상봉역" class="jungrang">상봉역</option>
+      <option value="중화역" class="jungrang">중화역</option>
+      <option value="망우역" class="jungrang">망우역</option>
+      <option value="건대입구역" class="gwangjin">건대입구역</option>
+      <option value="어린이대공원역" class="gwangjin">어린이대공원역</option>
+      <option value="강변역" class="gwangjin">강변역</option>
+    </select>
+    </p>
+    <p>
+    관심사 : <input type="text" name="group_interest">
+    </p>
+    <p>
+    <textarea rows="6" name="group_content" placeholder="그룹을 소개해주세요"></textarea>
+    </p>
+    <p>
+    <input type="submit" value="아!!">
+    </p>
+</form>
+
+<script>
+$(document).ready(function(){
+    $("#station").chained("#gu");
+});
+</script>
+
+<script src="/jquery.chained.min.js"></script>
+
+
+ 
