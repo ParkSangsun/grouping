@@ -1,0 +1,86 @@
+<div class="container">
+  <a href="/">홈으로가기</a>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title" style="display: inline-block"><%= @group.group_name %></h3>
+          2 / <%= @group.group_max %>
+          <%= @group.group_founder %>
+        </div>
+        <div class="panel-body">
+          <%= @group.group_region %>
+          <%= @group.group_interest %>
+          <span class="glyphicon glyphicon-thumbs-up"><% unless @group.group_like == 0 %><%= @group.group_like %><% end %></span>
+        </div>
+      </div>
+      <div class="writebutton pull-right">
+      <a data-toggle="modal" data-target="#write" style="cursor: pointer"><span class="glyphicon glyphicon-pencil" style="font-size: 35px"></span></a>
+      </div>
+      
+      
+      <div class="posts" style="margin-top: 80px;">
+      <% @group.posts.each do |p| %>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%= p.post_username %></h3>
+          </div>
+          <div class="panel-body">
+            <%= p.post_content %>
+            <div class="panel-bottom">
+              <a href="/groupline/post_like/<%= p.id%>"><span class="glyphicon glyphicon-thumbs-up" style="margin-top: 20px">좋아요</span></a>
+              <br>
+              <% unless p.post_like == 0 %>
+                <%= p.post_like %>명이 좋아합니다.
+              <% else %>
+              첫 좋아요를 눌러주세요
+              <% end %>
+              <form action="/groupline/reply_write" method="POST">
+                <div class="input-group" style="margin-top: 10px; margin-bottom: 15px;">
+                  <input type="hidden" name="post_id" value="<%= p.id %>">
+                  <input type="text" class="form-control" placeholder="댓글을 입력하세요..." name="content">
+                  <span class="input-group-btn">
+                    <button class="btn btn-info" type="submit">댓글달기</button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+          <% p.replies.each do |r|%>
+          <div class="panel-footer" style="background-color: #F9FEFF; border-top: 1px solid #C4E3F3">
+            <%= r.reply_username %> : <%= r.reply_content %> <br>
+          </div>
+          <% end %>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- write modal -->
+<div class="modal fade" id="write" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">글쓰기</h4>
+      </div>
+      <form action="/groupline/post_create" method="POST">
+        <div class="modal-body">
+          <input type="hidden" id="id" name="group_id" value="<%= @group.id %>">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">작성자</span>
+            <input type="text" class="form-control" placeholder="작성자명" aria-describedby="basic-addon1" name="post_username">
+          </div>
+          <textarea class="form-control" rows="10" name="post_content" placeholder="무슨 생각을 하고 계신가요?"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">게시</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

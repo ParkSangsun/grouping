@@ -1,10 +1,12 @@
 <div class="container">
-  <a href="/groupline/create_group">그룹생성</a>
+  <div class="createbutton" style="margin: 20px; height: 20px;">
+  <a data-toggle="modal" data-target="#create_group" style="cursor: pointer"><span class="glyphicon glyphicon-plus-sign" style="font-size: 35px; float: right;"></span></a>
+  </div>
   <div class="row">
     <% @groupline.each do |p| %>
     <div class="col-md-6">
       <a href="/groupline/group_detail/<%= p.id%>">
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title" style="display: inline-block"><%= p.group_name %></h3>
             2 / <%= p.group_max %>
@@ -13,7 +15,7 @@
           <div class="panel-body">
             <%= p.group_region %>
             <%= p.group_interest %>
-            <%= p.group_like %>
+            <span class="glyphicon glyphicon-thumbs-up"><% unless p.group_like == 0 %><%= p.group_like %><% end %></span>
           </div>
         </div>
       </a>
@@ -21,3 +23,66 @@
     <% end %>
   </div>
 </div>
+
+<!-- create group modal -->
+<div class="modal fade" id="create_group" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">그룹생성</h4>
+      </div>
+      <form action="/groupline/group_create" method="POST">
+        <div class="modal-body">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">그룹이름</span>
+            <input type="text" name="group_name" class="form-control" placeholder="그룹 이름" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">그룹리더</span>
+            <input type="text" name="group_founder" class="form-control" placeholder="리더 이름" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">최대인원</span>
+            <input type="text" name="group_max" class="form-control" placeholder="숫자로 입력" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">지역</span>
+            <select class="form-control" id="gu">
+              <option value="">--</option>
+              <option value="jungrang">중랑구</option>
+              <option value="gwangjin">광진구</option>
+            </select>
+            <select class="form-control" id="station" name="group_region">
+              <option value="">--</option>
+              <option value="상봉역" class="jungrang">상봉역</option>
+              <option value="중화역" class="jungrang">중화역</option>
+              <option value="망우역" class="jungrang">망우역</option>
+              <option value="건대입구역" class="gwangjin">건대입구역</option>
+              <option value="어린이대공원역" class="gwangjin">어린이대공원역</option>
+              <option value="강변역" class="gwangjin">강변역</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">관심사</span>
+            <input type="text" name="group_interest" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+          </div>
+          <textarea class="form-control" rows="6" name="group_content" placeholder="그룹을 소개해주세요"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">게시</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function(){
+    $('#create_group').on('show.bs.modal', function (event) {
+      $("#station").chained("#gu");
+    });
+  });
+</script>
+<script src="/jquery.chained.min.js"></script>

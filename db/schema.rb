@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150901124817) do
+ActiveRecord::Schema.define(version: 20150904081232) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "group_name"
@@ -26,8 +26,19 @@ ActiveRecord::Schema.define(version: 20150901124817) do
     t.datetime "updated_at",     null: false
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.integer  "group_id"
+    t.string   "post_username"
+    t.string   "post_profileimg"
+    t.integer  "post_like"
+    t.text     "post_content"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
   create_table "replies", force: :cascade do |t|
     t.integer  "group_id"
+    t.integer  "post_id"
     t.string   "reply_username"
     t.string   "reply_content"
     t.datetime "created_at",     null: false
