@@ -2,6 +2,19 @@
   <div class="createbutton" style="margin: 20px; height: 20px;">
   <a data-toggle="modal" data-target="#create_group" style="cursor: pointer"><span class="glyphicon glyphicon-plus-sign" style="font-size: 35px; float: right;"></span></a>
   </div>
+  
+  <!--유저 로그인 상태에 따라 로그인/로그아웃 버튼 활성화 by 예준-->
+  <div class="row">
+    <% if user_signed_in? %>
+      <%= link_to('Logout', destroy_user_session_path, :method => :get) %>
+      
+      <p>email : <%= current_user.email %></p>
+      <p>nickname : <%= current_user.nickname %></p>
+    <% else %>
+      <%= link_to('Login', new_user_session_path)  %>
+    <% end %>
+  </div>
+  
   <div class="row">
     <% @groupline.each do |p| %>
     <div class="col-md-6">
@@ -37,10 +50,6 @@
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">그룹이름</span>
             <input type="text" name="group_name" class="form-control" placeholder="그룹 이름" aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">그룹리더</span>
-            <input type="text" name="group_founder" class="form-control" placeholder="리더 이름" aria-describedby="basic-addon1">
           </div>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">최대인원</span>

@@ -70,10 +70,7 @@
       <form action="/groupline/post_create" method="POST">
         <div class="modal-body">
           <input type="hidden" id="id" name="group_id" value="<%= @group.id %>">
-          <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">작성자</span>
-            <input type="text" class="form-control" placeholder="작성자명" aria-describedby="basic-addon1" name="post_username">
-          </div>
+
           <textarea class="form-control" rows="10" name="post_content" placeholder="무슨 생각을 하고 계신가요?"></textarea>
         </div>
         <div class="modal-footer">

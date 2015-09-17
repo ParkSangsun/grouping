@@ -3,7 +3,7 @@ class GrouplineController < ApplicationController
     
     groupline = Group.new
     groupline.group_name = params[:group_name]
-    groupline.group_founder = params[:group_founder]
+    groupline.group_founder = current_user.nickname
     groupline.group_max = params[:group_max]
     groupline.group_region = params[:group_region]
     groupline.group_interest = params[:group_interest]
@@ -34,7 +34,7 @@ class GrouplineController < ApplicationController
     group_reply = Reply.new
     group_reply.group_id = params[:group_id]
     group_reply.post_id = params[:post_id]
-    group_reply.reply_username = "작성자"
+    group_reply.reply_username = current_user.nickname
     group_reply.reply_content = params[:content]
     group_reply.save
     redirect_to :back
@@ -49,7 +49,7 @@ class GrouplineController < ApplicationController
     
     create_post = Post.new
     create_post.group_id = params[:group_id]
-    create_post.post_username = params[:post_username]
+    create_post.post_username = current_user.nickname
     create_post.post_content = params[:post_content]
     create_post.post_like = 0
     create_post.save
@@ -64,4 +64,8 @@ class GrouplineController < ApplicationController
     redirect_to :back
   end
   
+  def friend_list
+    @user = User.all
+  end
+
 end

@@ -1,6 +1,14 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
+  #추가함
+  
+  config.action_mailer.default_url_options = { :host => 'devisetest-parksangsun.c9.io' }
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+     	 	 api_key: 'key-cc60ebfe6e03c4951455e3192e10ace1',
+   	   	 domain: 'sandbox2cd991c0472d4de4abdcabd4d5700dfc.mailgun.org'
+  }
+  
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.

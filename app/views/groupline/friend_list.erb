@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="searchform" style="margin-bottom: 20px;">
+        <form>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search"></span></span>
+            <input type="text" class="form-control" placeholder="찾으실 이름을 입력하세요" style="width: 50%;">
+            <select class="form-control" id="gu" style="width: 50%;">
+              <option value="" selected>내 관심사</option>
+              <option value="jungrang">운동</option>
+              <option value="gwangjin">스터디</option>
+            </select>
+            <select class="form-control" id="gu" style="width: 50%;">
+              <option value="" selected>내 지역</option>
+              <option value="jungrang">중랑구</option>
+              <option value="gwangjin">광진구</option>
+            </select>
+            <select class="form-control" id="station" name="group_region" style="width: 50%;">
+              <option value="" selected>역 선택</option>
+              <option value="상봉역" class="jungrang">상봉역</option>
+              <option value="중화역" class="jungrang">중화역</option>
+              <option value="망우역" class="jungrang">망우역</option>
+              <option value="건대입구역" class="gwangjin">건대입구역</option>
+              <option value="어린이대공원역" class="gwangjin">어린이대공원역</option>
+              <option value="강변역" class="gwangjin">강변역</option>
+            </select>
+          </div>
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">검색</button>
+          </span>
+        </form>
+      </div>
+      <div class="friendlist">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">친구 리스트</h3>
+          </div>
+          <div class="panel-body">
+            <p>같은 지역의 친구를 찾아보십쇼 씨발</p>
+          </div>
+          <table class="table table-striped table-hover">
+            <tr>
+              <th>Name</th>
+              <th>interest</th>
+            </tr>
+            <% @user.each do |p| %>
+            <tr>
+              <td><%= p.nickname %></td>
+              <td>축구</td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
