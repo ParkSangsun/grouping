@@ -4,5 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
          validates_uniqueness_of :nickname
+  
+  has_many :memberships, -> { where.not(memberships: { accepted_on: nil}) }
+  has_many :groups, :through => :memberships
+  
          
 end

@@ -5,7 +5,7 @@
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title" style="display: inline-block"><%= @detail.group_name %></h3>
-          2 / <%= @detail.group_max %>
+          <%= @detail.memberships.count %> / <%= @detail.group_max %>
           <%= @detail.group_founder %>
         </div>
         <div class="panel-body">
@@ -20,6 +20,11 @@
         </div>
         <div class="panel-bottom">
           <a href="/groupline/group_like/<%= @detail.id%>"><span class="glyphicon glyphicon-thumbs-up" style="margin-top: 20px">좋아요</span></a>
+          <% if @detail.group_founder != current_user.nickname %>
+          <a data-toggle="modal" href="#join">가입신청</a>
+          <% else %>
+          <a href="/groupadmin/group_admin/<%= @detail.id %>">그룹 관리</a>
+          <% end %>
           <form action="/groupline/reply_write" method="POST">
             <div class="input-group" style="margin-top: 10px; margin-bottom: 15px;">
               <input type="hidden" name="group_id" value="<%= @detail.id %>">
@@ -36,6 +41,29 @@
         </div>
         <% end %>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- join modal -->
+<div class="modal fade" id="join" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">가입신청</h4>
+      </div>
+      <form action="/groupadmin/membership_join" method="POST">
+        <div class="modal-body">
+          <input type="hidden" name="group_id" value="<%= @detail.id %>">
+          <input type="hidden" name="group_name" value="<%= @detail.group_name %>">
+          <textarea class="form-control" rows="10" name="apply_introduce" placeholder="가입 인사를 적어주세요"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">게시</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

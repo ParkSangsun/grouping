@@ -22,7 +22,7 @@
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title" style="display: inline-block"><%= p.group_name %></h3>
-            2 / <%= p.group_max %>
+            <%= p.memberships.count %> / <%= p.group_max %>
             <%= p.group_founder %>
           </div>
           <div class="panel-body">

@@ -5,7 +5,7 @@
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title" style="display: inline-block"><%= @group.group_name %></h3>
-          2 / <%= @group.group_max %>
+          <%= @group.memberships.count %> / <%= @group.group_max %>
           <%= @group.group_founder %>
         </div>
         <div class="panel-body">
@@ -70,7 +70,6 @@
       <form action="/groupline/post_create" method="POST">
         <div class="modal-body">
           <input type="hidden" id="id" name="group_id" value="<%= @group.id %>">
-
           <textarea class="form-control" rows="10" name="post_content" placeholder="무슨 생각을 하고 계신가요?"></textarea>
         </div>
         <div class="modal-footer">

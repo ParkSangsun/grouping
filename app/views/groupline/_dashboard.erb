@@ -14,18 +14,26 @@
         <li>
             <a href="/">GroupList</a>
         </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Group<span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li class="dropdown-header">내가 속한 그룹</li>
-            <!-- 이부분에 각 유저가 속한 그룹 name을 반복문으로 뽑아주고 a 링크를 해당 /groupline/group_sns/p.id에 걸면 될 것 같음-->
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li><a href="#">Separated link</a></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
+        <% if user_signed_in? %>
+          <% unless current_user.groups.nil? %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Group<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li class="dropdown-header">내가 속한 그룹</li>
+                <!-- 이부분에 각 유저가 속한 그룹 name을 반복문으로 뽑아주고 a 링크를 해당 /groupline/group_sns/p.id에 걸면 될 것 같음-->
+                <% current_user.groups.each do |p| %>
+                <li><a href="/groupline/group_sns/<%= p.id %>"><%= p.group_name %></a></li>
+                <% end %>
+                <li class="dropdown-header">내 그룹 관리</li>
+                <% current_user.groups.each do |p| %>
+                  <% if p.group_founder == current_user.nickname %>
+                  <li><a href="/groupadmin/group_admin/<%= p.id %>"><%= p.group_name %></a></li>
+                  <% end %>
+                <% end %>
+              </ul>
+            </li>
+          <% end %>
+        <% end %>
         <li>
             <a href="#">Callendar</a>
         </li>

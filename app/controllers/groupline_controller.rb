@@ -10,6 +10,15 @@ class GrouplineController < ApplicationController
     groupline.group_content = params[:group_content]
     groupline.group_like = 0
     groupline.save
+    
+    membership = Membership.new
+    membership.group_id = groupline.id
+    membership.group_name = groupline.group_name
+    membership.user_id = current_user.id
+    membership.apply_nickname = current_user.nickname
+    membership.accepted_on = DateTime.now
+    membership.save
+    
     redirect_to '/'
   end
 
@@ -20,6 +29,7 @@ class GrouplineController < ApplicationController
   def group_detail
     @detail = Group.find(params[:id])
     @reply = Reply.all
+    #@userid = current_user.nickname
   end
   
   def group_like
@@ -66,6 +76,6 @@ class GrouplineController < ApplicationController
   
   def friend_list
     @user = User.all
+    @group = Group.all
   end
-
 end
