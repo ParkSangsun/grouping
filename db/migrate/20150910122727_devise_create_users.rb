@@ -6,14 +6,15 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :encrypted_password, null: false, default: ""
       t.string :nickname, null: false, default: ""
       t.string :user_interest
-      t.text   :introduce
-      t.string :major
+      t.text   :introduce, defualt: ""
+      t.string :major, defualt: ""
       
       #station
-      t.string :first_station
-      t.string :second_station
+      t.string :first_station, default: nil
+      t.string :second_station, default: nil
       
       #profile img upload
+      
       
 
 

@@ -36,7 +36,7 @@
     			case '서대문구':
     				vals = data.서대문구.split(",");
     				break;
-    			case 'base':
+          case 'base':
     				vals = ['근처의 역을 선택하세요'];
     		}
     		
@@ -105,6 +105,16 @@
     <%= f.text_field :nickname %>
   </div>
   
+  <div class="field">
+    <%= f.label :introduce %><br />
+    <%= f.text_area :introduce, :col => "100", :size => "50" %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :major %><br />
+    <%= f.text_field :major %>
+  </div>
+  
   
   
   
@@ -138,7 +148,7 @@
 		</select>
 	
 		<select id="first_station" name = "first_station">
-			<option>지역을 먼저 선택하세요</option>
+			<option value="">지역을 먼저 선택하세요</option>
 		</select>
 		
 		<br>
@@ -151,7 +161,7 @@
 		
 	
 		<select id="second_station" name = "second_station">
-			<option>지역을 먼저 선택하세요</option>
+			<option value ="">지역을 먼저 선택하세요</option>
 		</select>
   </div>
   

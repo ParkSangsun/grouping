@@ -57,10 +57,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
     
     build_resource
     super do |resource|
+      #if params[:first_station] == params[:second_station]
+      #   :notice
+      # end
       if resource.save
         @a = User.find(resource.id)
-        @a.first_station = params[:first_station].to_s
-        @a.second_station = params[:second_station].to_s
+        @a.first_station = params[:first_station]
+        @a.second_station = params[:second_station]
+        #[@a.first_station, @a.second_station].each do |x|
+        if params[:first_station] == ""
+          @a.first_station = nil
+        end
+        if params[:second_station] == ""
+          @a.second_station = nil
+        end
+
         #@a.user_interest = params[:interest]
         # params[:interest].each do |x|
         #   unless x == nil
@@ -84,7 +95,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def sign_up_params
-    params.require(:user).permit(:user_interest, :nickname, :first_station, :second_station, :email, :password, :password_confirmation)
+    params.require(:user).permit(:introduce, :major, :user_interest, :nickname, :first_station, :second_station, :email, :password, :password_confirmation)
   end
   
   
