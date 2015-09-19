@@ -45,7 +45,6 @@ class GrouplineController < ApplicationController
   
   # 리플 달기
   def reply_write
-    
     group_reply = Reply.new
     group_reply.group_id = params[:group_id]
     group_reply.post_id = params[:post_id]
@@ -89,11 +88,30 @@ class GrouplineController < ApplicationController
   end
   
   #프로필 이미지 업로드
-    def profile_update
-    @users = User.find(params[:id])
-    @users.profile_img = params[:profile_img]
-    @users.save
+  def profile_update
+  @users = User.find(params[:id])
+  @users.profile_img = params[:profile_img]
+  @users.save
+  
+  redirect_to '/'
+  end
+  
+  def profile
+    @profile = User.find(params[:id])
+  end
+  
+  def post_delete
+    @post = Post.find(params[:id])
+    @post.destroy
     
-    redirect_to '/'
+    redirect_to :back
+  end
+  
+  def post_modify
+    post = Post.find(params[:id])
+    post.post_content = params[:post_content]
+    post.save
+    
+    redirect_to :back
   end
 end

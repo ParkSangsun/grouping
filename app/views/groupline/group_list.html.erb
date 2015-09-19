@@ -3,26 +3,6 @@
   <div class="createbutton" style="margin: 20px; height: 20px;">
   <a data-toggle="modal" data-target="#create_group" style="cursor: pointer"><span class="glyphicon glyphicon-plus-sign" style="font-size: 35px; float: right;"></span></a>
   </div>
-  
-  <!--유저 로그인 상태에 따라 로그인/로그아웃 버튼 활성화 by 예준-->
-  <div class="row">
-    <% if user_signed_in? %>
-      <%= link_to('Logout', destroy_user_session_path, :method => :get) %>
-        <% if current_user.profile_img =! nil %>
-        <br>
-        <img src ="<%= current_user.profile_img %>">
-        <% end %>
-      <p>이메일 : <%= current_user.email %></p>
-      <p>닉네임 : <%= current_user.nickname %></p>
-      <p>내 지역 : <%= current_user.first_station %>, <%= current_user.second_station %></p>
-      <e><%= link_to '프로필 사진 수정' , "/groupline/profile" %></e></br>
-
-    <% else %>
-      <%= link_to('Login', new_user_session_path)  %>
-    <% end %>
-  </div>
-  
-  
   <div class="row">
     <% @groupline.each do |p| %>
     <div class="col-md-6">
@@ -31,6 +11,7 @@
           <div class="panel-heading">
             <h3 class="panel-title" style="display: inline-block"><%= p.group_name %></h3>
             <%= p.memberships.count %> / <%= p.group_max %>
+            <img src="<%= p.users.first.profile_img %>" style="width: 25px; height: 25px;">
             <%= p.group_founder %>
           </div>
           <div class="panel-body">

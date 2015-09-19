@@ -27,9 +27,7 @@
               <option value="강변역" class="gwangjin">강변역</option>
             </select>
           </div>
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">검색</button>
-          </span>
+          <button class="btn btn-default" type="submit">검색</button>
         </form>
       </div>
       <div class="friendlist">
@@ -47,7 +45,7 @@
             </tr>
             <% @user.each do |p| %>
             <tr>
-              <td><%= p.nickname %></td>
+              <td><a href="/groupline/profile/<%= p.id %>"><img src="<%= p.profile_img %>" style="width: 25px;, height: 25px;"><%= p.nickname %></a></td>
               <td>축구</td>
             </tr>
             <% end %>

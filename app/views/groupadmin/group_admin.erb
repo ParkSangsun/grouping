@@ -2,6 +2,28 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title" style="display: inline-block"><%= @group.group_name %></h3>
+          <%= @group.memberships.count %> / <%= @group.group_max %>
+          <%= @group.group_founder %>
+        </div>
+        <div class="panel-body">
+          <%= @group.group_region %>
+          <%= @group.group_interest %>
+          <span class="glyphicon glyphicon-thumbs-up"><% unless @group.group_like == 0 %><%= @group.group_like %><% end %></span>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">그룹 소개</h3>
+        </div>
+        <div class="panel-body">
+          <%= @group.group_content %>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px;"><a data-toggle="modal" href="#group_modify">그룹정보수정</a></div>
+      <div class="delete"><a data-toggle="modal" href="#group_delete">그룹삭제</a></div>
       <div class="friendlist">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -35,3 +57,83 @@
   </div>
 </div>
 <!-- 끝 -->
+
+
+<!-- 수정 모달 시작-->
+<!-- 그룹 생성 modal 시작-->
+<div class="modal fade" id="group_modify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">그룹정보수정</h4>
+      </div>
+      <form action="/groupadmin/group_modify/<%= @group.id %>" method="POST">
+        <div class="modal-body">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">그룹이름</span>
+            <input type="text" name="group_name" class="form-control" value="<%= @group.group_name %>" placeholder="그룹 이름" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">최대인원</span>
+            <input type="text" name="group_max" class="form-control" value="<%= @group.group_max %>" placeholder="숫자로 입력" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">지역</span>
+            <select class="form-control" id="gu">
+              <option value="">--</option>
+              <option value="jungrang">중랑구</option>
+              <option value="gwangjin">광진구</option>
+            </select>
+            <select class="form-control" id="station" name="group_region">
+              <option value="">--</option>
+              <option value="상봉역" class="jungrang">상봉역</option>
+              <option value="중화역" class="jungrang">중화역</option>
+              <option value="망우역" class="jungrang">망우역</option>
+              <option value="건대입구역" class="gwangjin">건대입구역</option>
+              <option value="어린이대공원역" class="gwangjin">어린이대공원역</option>
+              <option value="강변역" class="gwangjin">강변역</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">관심사</span>
+            <input type="text" name="group_interest" class="form-control" value="<%= @group.group_max %>" placeholder="Username" aria-describedby="basic-addon1">
+          </div>
+          <textarea class="form-control" rows="6" name="group_content" placeholder="그룹을 소개해주세요"><%= @group.group_content %></textarea>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">비밀번호확인</span>
+            <input type="password" name="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">수정</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- 그룹 수정 modal 끝-->
+
+<div class="modal fade" id="group_delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">정말로 삭제하시겠습니까?</h4>
+      </div>
+      <form action="/groupadmin/group_destroy/<%= @group.id %>" method="POST">
+        <div class="modal-body">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">비밀번호확인</span>
+            <input type="password" name="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+          <button type="submit" class="btn btn-danger">삭제</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

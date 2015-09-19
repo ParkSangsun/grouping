@@ -7,7 +7,7 @@
         <div class="panel-heading">
           <h3 class="panel-title" style="display: inline-block"><%= @group.group_name %></h3>
           <%= @group.memberships.count %> / <%= @group.group_max %>
-          <%= @group.group_founder %>
+          <%= @founder.profile_img%><%= @group.group_founder %>
         </div>
         <div class="panel-body">
           <%= @group.group_region %>
@@ -25,6 +25,12 @@
         <div class="panel panel-info">
           <div class="panel-heading">
             <h3 class="panel-title"><%= p.post_username %></h3>
+            <% if current_user.nickname == p.post_username %>
+            <div class="btn-group pull-right" role="group">
+              <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#post_modify<%= p.id %>" data-id="<%= p.id %>">수정</button>
+              <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#post_delete" data-id="<%= p.id %>">삭제</button>
+            </div>
+            <% end %>
           </div>
           <div class="panel-body">
             <%= p.post_content %>
@@ -82,3 +88,81 @@
   </div>
 </div>
 <!-- 글 작성 modal 끝 -->
+
+
+<!-- 글 삭제 id 전달 스크립트 -->
+<script>
+$(function(){
+  $('#post_delete').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+    var modal = $(this);
+    modal.find('.modal-footer input#id').val(id);
+  });
+});
+</script>
+<!-- 글 삭제 스크립트 끝 -->
+
+<!-- 글 수정 스크립트 -->
+<% @group.posts.each do |p| %>
+<script>
+  $(function(){
+    $('#post_modify<%= p.id %>').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget);
+      var id = button.data('id');
+      var modal = $(this);
+      modal.find('.modal-body input#id').val(id);
+      modal.find('.modal-body textarea#post_content').val("");
+    });
+  });
+</script>
+<% end %>
+<!-- 글 수정 스크립트 끝 -->
+
+
+
+
+<!-- 글 삭제 modal -->
+<div class="modal fade" id="post_delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">정말로 삭제하시겠습니까?</h4>
+      </div>
+      <form action="/groupline/post_delete" method="POST">
+        <div class="modal-footer">
+          <input type="hidden" id="id" name="id">
+          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+          <button type="submit" class="btn btn-danger">삭제</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- 글 삭제 modal 끝 -->
+
+<!-- 글 수정 modal 시작 -->
+<% @group.posts.each do |p| %>
+<div class="modal fade" id="post_modify<%= p.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">수정하기</h4>
+      </div>
+      <form action="/groupline/post_modify" method="POST">
+        <div class="modal-body">
+          <input type="hidden" id="id" name="id">
+          <textarea class="form-control" rows="10" name="post_content"><%= p.post_content %></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+          <button type="submit" class="btn btn-success">수정완료</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<% end %>
+<!-- 글 수정 modal 끝 -->

@@ -42,7 +42,46 @@
 </nav>
 <!-- dashboard 끝 -->
 
-<!-- 버튼 클릭 event script -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid" style="padding-left: 235px; padding-right: 180px;">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="navbar-header">
+    </div>
+    
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <% if user_signed_in? %>
+      <ul class="nav nav-pills navbar-right">
+        <li><a href="/groupline/profile/<%= current_user.id%>">
+        <% if current_user.profile_img.nil? %>
+        <span class="glyphicon glyphicon-user" style="width: 25px; height: 25px;"></span>
+        <% else %>
+        <img style="width: 25px; height: 25px;" src ="<%= current_user.profile_img %>">
+        <% end %>
+        <%= current_user.nickname %>님</a></li>
+        <li role="presentation" class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/groupline/profile/<%= current_user.id%>">프로필</a></li>
+            <li><a href="#">추가예정</a></li>
+            <li><a href="#">추가예정</a></li>
+            <li class="divider"></li>
+            <li><%= link_to('Logout', destroy_user_session_path, :method => :get) %></li>
+          </ul>
+        </li>
+      </ul>
+      <% else %>
+      <ul class="nav nav-pills navbar-right">
+      <li><%= link_to('Login', new_user_session_path)  %></li>
+      <li><a href="#" data-toggle="modal" data-target="#login-modal">Modal</a></li>
+      </ul>
+    <% end %>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+<!-- dashboard 버튼 클릭 event script -->
 <script>
 $(document).ready(function () {
   var trigger = $('.hamburger'),
@@ -74,3 +113,39 @@ $(document).ready(function () {
 });
 </script>
 <!-- 버튼 클릭 event script 끝-->
+
+<!-- login modal -->
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="loginmodal-container">
+    	<h1>Login to Your Account</h1><br>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="field">
+          <%= f.label :email %><br />
+          <%= f.email_field :email, placeholder:"Email", autofocus: true %>
+        </div>
+      
+        <div class="field">
+          <%= f.label :password %><br />
+          <%= f.password_field :password, placeholder:"Password", autocomplete: "off" %>
+        </div>
+      
+        <% if devise_mapping.rememberable? -%>
+          <div class="field">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
+          </div>
+        <% end -%>
+      
+        <div class="actions">
+          <%= f.submit "Login", class:"login loginmodal-submit" %>
+        </div>
+      <% end %>
+      
+      <div class="login-help">
+      <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- login modal 끝 -->

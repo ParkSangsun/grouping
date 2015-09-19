@@ -1,8 +1,85 @@
-<img src ="<%= current_user.profile_img %>">
-
-<form action="/groupline/profile_update/<%= current_user.id %>" enctype="multipart/form-data" method = "POST">
-    
-    <input type ="file" name = "profile_img">
-    <input type ="submit" vlaue ="save">
-    
-</form>
+<div class="container"><!--컨테이너시작-->
+  <div class="row"><!--row start-->
+    <div class="col-md-8 col-md-offset-2" id="first_profile"><!--right grid-->
+      <div class="panel panel-default"><!--프로필 상단 시작-->
+        <div class="panel-body">
+          <a href="#" class="thumbnail col-md-3">
+          <% unless @profile.profile_img.nil? %>
+            <img src ="<%= @profile.profile_img %>">
+          <% else %>
+          <% end %>
+          </a>
+          <!--<form action="/groupline/profile_update/<%= current_user.id %>" enctype="multipart/form-data" method = "POST">
+            <input type ="file" name = "profile_img">
+            <input type ="submit" value ="save">
+          </form>-->
+          <div class="col-md-9">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title"><%= @profile.nickname %></h3>
+              </div>
+              <div class="panel-body" style="height: 170px;">
+                <ul>
+                  <li>관심사: </li>
+                  <li>지역: 
+                  <% unless current_user.first_station.nil? %>
+                  <%= @profile.first_station %>
+                  <% end %>
+                  <% unless @profile.second_station.nil? %>
+                  <%= @profile.second_station %></li>
+                  <% end %>
+                  <li>학과:</li>
+                  <% unless @profile.groups.nil? %>
+                  <li>그룹:
+                  <% @profile.groups.each do |p| %><%= p.group_name %> <% end %></li>
+                  <% end %>
+                </ul>
+                <% if current_user.id == @profile.id %>
+                <a>프로필수정</a>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div> <!--사진 그리드 끝--> 
+      </div><!--프로필 상단 전체 row 끝-->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">자기소개</h3>
+        </div>
+        <div class="panel-body">
+        <% if current_user.id == @profile.id %>
+          <form>
+          <textarea class="form-control" rows="5">자기소개 내용</textarea>
+          <button class="btn btn-default pull-right">수정</button>
+          </form>
+        <% else %>
+          자기소개 내용
+        <% end %>
+        </div>
+      </div>
+      <% if current_user.id == @profile.id %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">개인 정보</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li>닉네임: <%= current_user.nickname %></li>
+            <li>아이디: <%= current_user.email %></li>
+            <li><a>비밀번호 변경</a></li>
+          </ul>
+          <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">메세지 수신범위</button>
+              </span>
+              <select class="form-control">
+                <option value="" class="">전체에게</option>
+                <option value="" class="">그룹에게만</option>
+                <option value="" class="">수신거부</option>
+              </select>
+            </div><!-- /input-group -->
+        </div>
+      </div>
+      <% end %>
+  </div><!--row end-->  
+</div><!--컨테이너끝-->

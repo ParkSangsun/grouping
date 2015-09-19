@@ -16,6 +16,7 @@ class GroupadminController < ApplicationController
   
   # 그룹 관리 페이지
   def group_admin
+    @group = Group.find(params[:id])
     # group_id에 따라서 membership list를 출력한다
     @membership = Membership.where(:group_id => params[:id])
   end
@@ -27,6 +28,27 @@ class GroupadminController < ApplicationController
     accept.accepted_on = DateTime.now
     accept.save
     redirect_to :back
+  end
+  
+  def group_modify
+    group = Group.find(params[:id])
+    if (current_user.valid_password?(params[:password]))
+    group.group_name = params[:group_name]
+    group.group_max = params[:group_max]
+    group.group_region = params[:group_region]
+    group.group_interest = params[:group_interest]
+    group.group_content = params[:group_content]
+    group.save
+    end
+    redirect_to :back
+  end
+  
+  def group_destroy
+    group = Group.find(params[:id])
+    if (current_user.valid_password?(params[:password]))
+    group.destroy
+    end
+    redirect_to '/'
   end
   
 end
