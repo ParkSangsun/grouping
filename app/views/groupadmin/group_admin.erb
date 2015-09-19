@@ -1,3 +1,4 @@
+<!-- 그룹 관리 페이지 시작-->
 <div class="container">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
@@ -15,6 +16,7 @@
               <th>Introduce</th>
               <th>가입승인</th>
             </tr>
+            <!-- 가입신청 및 회원 List 출력 -->
             <% @membership.each do |p| %>
             <tr>
               <td><%= p.apply_nickname %></td>
@@ -32,4 +34,4 @@
     </div>
   </div>
 </div>
-      
+<!-- 끝 -->

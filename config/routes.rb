@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
   
-  devise_for :users
+  devise_for :users ,
+             :controllers => {:registrations =>"users/registrations"}
+
+
+  root :to => "groupline#group_list"
   
-  
-  root :to => 'groupline#group_list'
-  match ":controller(/:action(/:id))", :via => [:post, :get]
-  
+  match ":controller(/:action(/:id))", :via => [:get, :post]
   
 
   # The priority is based upon order of creation: first created -> highest priority.

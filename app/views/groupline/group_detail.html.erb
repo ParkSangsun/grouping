@@ -1,3 +1,4 @@
+<!-- 그룹 상세 페이지 시작 -->
 <div class="container">
   <a href="/">홈으로가기</a> <a href="/groupline/group_sns/<%= @detail.id%>">sns로 가기</a>
   <div class="row">
@@ -18,6 +19,7 @@
         <div class="panel-body">
           <%= @detail.group_content %>
         </div>
+        <% if user_signed_in? %>
         <div class="panel-bottom">
           <a href="/groupline/group_like/<%= @detail.id%>"><span class="glyphicon glyphicon-thumbs-up" style="margin-top: 20px">좋아요</span></a>
           <% if @detail.group_founder != current_user.nickname %>
@@ -32,9 +34,10 @@
               <span class="input-group-btn">
                 <button class="btn btn-primary" type="submit">댓글달기</button>
               </span>
-            </div><!-- /input-group -->
+            </div>
           </form>
         </div>
+        <% end %>
         <% @detail.replies.each do |p|%>
         <div class="panel-footer">
           <%= p.reply_username %> : <%= p.reply_content %> <br>
@@ -44,8 +47,9 @@
     </div>
   </div>
 </div>
+<!-- 그룹 상세 페이지 끝 -->
 
-<!-- join modal -->
+<!-- 가입신청 modal -->
 <div class="modal fade" id="join" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -67,3 +71,4 @@
     </div>
   </div>
 </div>
+<!-- 가입신청 modal 끝 -->

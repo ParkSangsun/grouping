@@ -1,3 +1,4 @@
+<!-- 그룹 전체보기 페이지 시작 -->
 <div class="container">
   <div class="createbutton" style="margin: 20px; height: 20px;">
   <a data-toggle="modal" data-target="#create_group" style="cursor: pointer"><span class="glyphicon glyphicon-plus-sign" style="font-size: 35px; float: right;"></span></a>
@@ -7,13 +8,20 @@
   <div class="row">
     <% if user_signed_in? %>
       <%= link_to('Logout', destroy_user_session_path, :method => :get) %>
-      
-      <p>email : <%= current_user.email %></p>
-      <p>nickname : <%= current_user.nickname %></p>
+        <% if current_user.profile_img =! nil %>
+        <br>
+        <img src ="<%= current_user.profile_img %>">
+        <% end %>
+      <p>이메일 : <%= current_user.email %></p>
+      <p>닉네임 : <%= current_user.nickname %></p>
+      <p>내 지역 : <%= current_user.first_station %>, <%= current_user.second_station %></p>
+      <e><%= link_to '프로필 사진 수정' , "/groupline/profile" %></e></br>
+
     <% else %>
       <%= link_to('Login', new_user_session_path)  %>
     <% end %>
   </div>
+  
   
   <div class="row">
     <% @groupline.each do |p| %>
@@ -36,8 +44,9 @@
     <% end %>
   </div>
 </div>
+<!-- 그룹 전체보기 페이지 끝 -->
 
-<!-- create group modal -->
+<!-- 그룹 생성 modal 시작-->
 <div class="modal fade" id="create_group" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -86,7 +95,9 @@
     </div>
   </div>
 </div>
+<!-- 그룹 생성 modal 끝-->
 
+<!-- select script 시작 -->
 <script>
   $(function(){
     $('#create_group').on('show.bs.modal', function (event) {
@@ -95,3 +106,4 @@
   });
 </script>
 <script src="/jquery.chained.min.js"></script>
+<!-- select script 끝 -->

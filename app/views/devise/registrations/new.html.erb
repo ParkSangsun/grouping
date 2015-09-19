@@ -1,3 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+  <meta charset="UTF-8">
+  <!-- 합쳐지고 최소화된 최신 CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  
+  <!-- 부가적인 테마 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+  
+  <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    
+  <script>
+  $(function() {
+    $("#first_region").change(function() {
+    
+    	var $dropdown = $(this);
+    
+    	$.getJSON("/station.json", function(data) {
+    	
+    		var key = $dropdown.val();
+    		var vals = [];
+    							
+    		switch(key) {
+    			case '광진구':
+    				vals = data.광진구.split(",");
+    				break;
+    			case '서대문구':
+    				vals = data.서대문구.split(",");
+    				break;
+    			case 'base':
+    				vals = ['근처의 역을 선택하세요'];
+    		}
+    		
+    		
+    		
+    		
+    		
+    		var $secondChoice = $("#first_station");
+    		$secondChoice.empty();
+    		$.each(vals, function(index, value) {
+    			$secondChoice.append("<option>" + value + "</option>");
+    		});
+    
+    	});
+    });
+  });
+  </script>
+  
+  <script>
+  $(function() {
+    $("#second_region").change(function() {
+    
+    	var $dropdown = $(this);
+    
+    	$.getJSON("/station.json", function(data) {
+    	
+    		var key = $dropdown.val();
+    		var vals = [];
+    							
+    		switch(key) {
+    			case '광진구':
+    				vals = data.광진구.split(",");
+    				break;
+    			case '서대문구':
+    				vals = data.서대문구.split(",");
+    				break;
+    			case 'base':
+    				vals = ['근처의 역을 선택하세요'];
+    		}
+    		
+    		var $secondChoice = $("#second_station");
+    		$secondChoice.empty();
+    		$.each(vals, function(index, value) {
+    			$secondChoice.append("<option>" + value + "</option>");
+    		});
+    
+    	});
+    });
+  });
+  </script>
+
+</head>
+<body>
 <h2>Sign up</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -32,6 +124,37 @@
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
+  
+    <div class = "field">
+    
+    <%= f.label "지역 선택" %>
+    <br>
+    
+		
+		<select id="first_region">
+			<option selected="" value="base">지역을 선택하세요</option>
+			<option value="광진구">광진구</option>
+			<option value="서대문구">서대문구</option>
+		</select>
+	
+		<select id="first_station" name = "first_station">
+			<option>지역을 먼저 선택하세요</option>
+		</select>
+		
+		<br>
+		
+		<select id="second_region">
+			<option selected="" value="base">지역을 선택하세요</option>
+			<option value="광진구">광진구</option>
+			<option value="서대문구">서대문구</option>
+		</select>
+		
+	
+		<select id="second_station" name = "second_station">
+			<option>지역을 먼저 선택하세요</option>
+		</select>
+		
+  </div>
 
   <div class="actions">
     <%= f.submit "Sign up" %>
@@ -39,3 +162,8 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+
+
+</body>
+
+</html>

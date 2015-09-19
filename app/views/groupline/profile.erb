@@ -1,0 +1,8 @@
+<img src ="<%= current_user.profile_img %>">
+
+<form action="/groupline/profile_update/<%= current_user.id %>" enctype="multipart/form-data" method = "POST">
+    
+    <input type ="file" name = "profile_img">
+    <input type ="submit" vlaue ="save">
+    
+</form>
