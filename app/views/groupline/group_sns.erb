@@ -7,12 +7,12 @@
         <div class="panel-heading">
           <h3 class="panel-title" style="display: inline-block"><%= @group.group_name %></h3>
           <%= @group.memberships.count %> / <%= @group.group_max %>
-          <%= @founder.profile_img%><%= @group.group_founder %>
+          <img src="<%= @group.users.first.profile_img %>" style="width: 25px; height: 25px;"><%= @group.group_founder %>
         </div>
         <div class="panel-body">
           <%= @group.group_region %>
           <%= @group.group_interest %>
-          <span class="glyphicon glyphicon-thumbs-up"><% unless @group.group_like == 0 %><%= @group.group_like %><% end %></span>
+          <span class="glyphicon glyphicon-thumbs-up"><%= @group.likes.count %></span>
         </div>
       </div>
       <div class="writebutton pull-right">
@@ -35,13 +35,12 @@
           <div class="panel-body">
             <%= p.post_content %>
             <div class="panel-bottom">
-              <a href="/groupline/post_like/<%= p.id%>"><span class="glyphicon glyphicon-thumbs-up" style="margin-top: 20px">좋아요</span></a>
+              <span class="glyphicon glyphicon-thumbs-up"><%= p.likes.count %></span>
+              <form action="/groupline/like">
+                <input type="hidden" value="<%= p.id %>" name="post_id">
+                <button type="submit" class="glyphicon glyphicon-thumbs-up" style="margin-top: 20px">좋아요</button>
+              </form>
               <br>
-              <% unless p.post_like == 0 %>
-                <%= p.post_like %>명이 좋아합니다.
-              <% else %>
-              첫 좋아요를 눌러주세요
-              <% end %>
               <form action="/groupline/reply_write" method="POST">
                 <div class="input-group" style="margin-top: 10px; margin-bottom: 15px;">
                   <input type="hidden" name="post_id" value="<%= p.id %>">

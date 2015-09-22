@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917062236) do
+ActiveRecord::Schema.define(version: 20150919160613) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "group_name"
@@ -20,10 +20,18 @@ ActiveRecord::Schema.define(version: 20150917062236) do
     t.string   "group_interest"
     t.text     "group_content"
     t.string   "group_founder"
-    t.integer  "group_like"
     t.string   "group_member"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer  "post_id"
+    t.integer  "group_id"
+    t.integer  "reply_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -41,7 +49,6 @@ ActiveRecord::Schema.define(version: 20150917062236) do
     t.integer  "group_id"
     t.string   "post_username"
     t.string   "post_profileimg"
-    t.integer  "post_like"
     t.text     "post_content"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
@@ -60,6 +67,9 @@ ActiveRecord::Schema.define(version: 20150917062236) do
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "nickname",               default: "", null: false
+    t.string   "user_interest",          default: ""
+    t.text     "introduce"
+    t.string   "major"
     t.string   "first_station"
     t.string   "second_station"
     t.string   "reset_password_token"

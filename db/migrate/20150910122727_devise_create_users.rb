@@ -5,6 +5,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
       t.string :nickname, null: false, default: ""
+      t.string :user_interest, array: true, default: ""
+      t.text   :introduce, defualt: ""
+      t.string :major, defualt: ""
       
       #station
       t.string :first_station

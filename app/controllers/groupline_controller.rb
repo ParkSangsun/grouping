@@ -8,7 +8,6 @@ class GrouplineController < ApplicationController
     groupline.group_region = params[:group_region]
     groupline.group_interest = params[:group_interest]
     groupline.group_content = params[:group_content]
-    groupline.group_like = 0
     groupline.save
     
     # 그룹 생성과 동시에 founder도 Membership에 등록한다
@@ -33,14 +32,27 @@ class GrouplineController < ApplicationController
   def group_detail
     @detail = Group.find(params[:id])
     @reply = Reply.all
+    @exist = Like.where(:user_id => current_user.id)
   end
   
   # 그룹 자체 좋아요
-  def group_like
-    group = Group.find(params[:id])
-    group.group_like = group.group_like + 1
-    group.save
-    redirect_to :back
+  def like
+      @likes = Like.where(:group_id => params[:group_id], :user_id => current_user.id)
+      
+      if @likes.exists?
+        @likes.destroy_all
+        redirect_to :back
+      else
+        like = Like.new
+        like.user_id = current_user.id
+        like.group_id = params[:group_id]
+        like.post_id = params[:post_id]
+        like.reply_id = params[:reply_id]
+        like.save
+        redirect_to :back
+      end
+      
+      
   end
   
   # 리플 달기
@@ -67,7 +79,6 @@ class GrouplineController < ApplicationController
     create_post.group_id = params[:group_id]
     create_post.post_username = current_user.nickname
     create_post.post_content = params[:post_content]
-    create_post.post_like = 0
     create_post.save
     
     redirect_to :back

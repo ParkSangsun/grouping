@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   # 위의 멤버십을 통해 group들이 user에게 할당됨
   has_many :groups, :through => :memberships
   
+  belongs_to :like
   #profile img upload
 
          

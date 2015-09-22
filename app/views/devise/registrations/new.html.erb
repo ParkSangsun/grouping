@@ -125,8 +125,13 @@
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
   
-    <div class = "field">
-    
+  <div class="field">
+    <%= f.label :major %><br />
+    <%= f.text_field :major %>
+  </div>
+  
+  
+  <div class = "field">
     <%= f.label "지역 선택" %>
     <br>
     
@@ -138,7 +143,7 @@
 		</select>
 	
 		<select id="first_station" name = "first_station">
-			<option>지역을 먼저 선택하세요</option>
+			<option value="">지역을 먼저 선택하세요</option>
 		</select>
 		
 		<br>
@@ -151,9 +156,16 @@
 		
 	
 		<select id="second_station" name = "second_station">
-			<option>지역을 먼저 선택하세요</option>
+			<option value ="">지역을 먼저 선택하세요</option>
 		</select>
-		
+  </div>
+  
+  <div class = "field">
+    <%= f.label "관심사를 선택해주세요" %></br>
+    <input type ="checkbox" name = "interest[]" value = "농구">농구</br>
+    <input type ="checkbox" name = "interest[]" value = "축구">축구</br>
+    <input type ="checkbox" name = "interest[]" value = "야구">야구</br>
+    <input type ="checkbox" name = "interest[]" value = "음주">음주</br>
   </div>
 
   <div class="actions">

@@ -11,7 +11,7 @@
         <div class="panel-body">
           <%= @group.group_region %>
           <%= @group.group_interest %>
-          <span class="glyphicon glyphicon-thumbs-up"><% unless @group.group_like == 0 %><%= @group.group_like %><% end %></span>
+          <span class="glyphicon glyphicon-thumbs-up"><% unless @group.likes.count == 0 %><%= @group.likes.count %><% end %></span>
         </div>
       </div>
       <div class="panel panel-default">

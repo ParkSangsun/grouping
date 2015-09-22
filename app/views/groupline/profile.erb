@@ -3,7 +3,7 @@
     <div class="col-md-8 col-md-offset-2" id="first_profile"><!--right grid-->
       <div class="panel panel-default"><!--프로필 상단 시작-->
         <div class="panel-body">
-          <a href="#" class="thumbnail col-md-3">
+          <a data-toggle="modal" data-target="#profile_img" style="cursor: pointer" class="thumbnail col-md-3">
           <% unless @profile.profile_img.nil? %>
             <img src ="<%= @profile.profile_img %>">
           <% else %>
@@ -20,7 +20,11 @@
               </div>
               <div class="panel-body" style="height: 170px;">
                 <ul>
-                  <li>관심사: </li>
+                  <li>관심사: 
+                  <% @interest_arr = @profile.user_interest.tr('[]",\/', '') %>
+                  <% @interest_arr.split(" ").each do |x| %>
+                  <%= x %> 
+                  <% end %></li>
                   <li>지역: 
                   <% unless current_user.first_station.nil? %>
                   <%= @profile.first_station %>
@@ -28,7 +32,10 @@
                   <% unless @profile.second_station.nil? %>
                   <%= @profile.second_station %></li>
                   <% end %>
-                  <li>학과:</li>
+                  <li>학과:
+                  <% unless @profile.major.nil? %>
+                  <%= @profile.major %></li>
+                  <% end %>
                   <% unless @profile.groups.nil? %>
                   <li>그룹:
                   <% @profile.groups.each do |p| %><%= p.group_name %> <% end %></li>
@@ -83,3 +90,24 @@
       <% end %>
   </div><!--row end-->  
 </div><!--컨테이너끝-->
+
+<!-- profile modal -->
+<div class="modal fade" id="profile_img" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">프로필사진등록</h4>
+      </div>
+      <form action="/groupline/profile_update/<%= current_user.id %>" enctype="multipart/form-data" method = "POST">
+        <div class="modal-body">
+          <input type="file" name="profile_img" class="form-control">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">등록</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

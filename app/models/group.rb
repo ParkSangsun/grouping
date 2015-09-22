@@ -7,5 +7,5 @@ class Group < ActiveRecord::Base
     has_many :memberships, -> { where.not(memberships: { accepted_on: nil}) }
     # 위의 멤버십을 통해 user들이 group에 할당됨
     has_many :users, :through => :memberships
-    
+    has_many :likes
 end

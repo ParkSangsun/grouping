@@ -54,12 +54,35 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #sign_up 이후 실행되어 station 정보 입력
   #protected
   def create
+    
     build_resource
     super do |resource|
+      #if params[:first_station] == params[:second_station]
+      #   :notice
+      # end
       if resource.save
         @a = User.find(resource.id)
-        @a.first_station = params[:first_station].to_s
-        @a.second_station = params[:second_station].to_s
+        @a.first_station = params[:first_station]
+        @a.second_station = params[:second_station]
+        #[@a.first_station, @a.second_station].each do |x|
+        if params[:first_station] == ""
+          @a.first_station = nil
+        end
+        if params[:second_station] == ""
+          @a.second_station = nil
+        end
+
+        #@a.user_interest = params[:interest]
+        # params[:interest].each do |x|
+        #   unless x == nil
+        #     @a.user_interest << parmas[:interest]
+        #   end
+        # end
+        
+        # @arr_interest = Array.new
+        # @arr_interest << params[:interest_1], params[:interest_2], params[:interest_3], params[:interest_4]
+        # @a.user_interest = @arr_interest
+        @a.user_interest = params[:interest]
         @a.save
       end
     end
@@ -67,11 +90,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   
   
+  
   #protected
   private
 
   def sign_up_params
-    params.require(:user).permit(:nickname, :first_station, :second_station, :email, :password, :password_confirmation)
+    params.require(:user).permit(:introduce, :major, :user_interest, :nickname, :first_station, :second_station, :email, :password, :password_confirmation)
   end
   
   

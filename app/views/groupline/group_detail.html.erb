@@ -12,7 +12,7 @@
         <div class="panel-body">
           <%= @detail.group_region %>
           <%= @detail.group_interest %>
-          <span class="glyphicon glyphicon-thumbs-up"><% unless @detail.group_like == 0 %><%= @detail.group_like %><% end %></span>
+          <span class="glyphicon glyphicon-thumbs-up"><%= @detail.likes.count %></span>
         </div>
       </div>
       <div class="panel panel-default">
@@ -21,7 +21,14 @@
         </div>
         <% if user_signed_in? %>
         <div class="panel-bottom">
-          <a href="/groupline/group_like/<%= @detail.id%>"><span class="glyphicon glyphicon-thumbs-up" style="margin-top: 20px">좋아요</span></a>
+          <form action="/groupline/like">
+          <input type="hidden" value="<%= @detail.id %>" name="group_id">
+          <% if @exist.exists? %>
+          <button type="submit" class="glyphicon glyphicon-thumbs-up" style="margin-top: 20px">좋아요취소</button>
+          <% else %>
+          <button type="submit" class="glyphicon glyphicon-thumbs-up" style="margin-top: 20px">좋아요</button>
+          <% end %>
+          </form>
           <% if @detail.group_founder != current_user.nickname %>
           <a data-toggle="modal" href="#join">가입신청</a>
           <% else %>
@@ -36,6 +43,7 @@
               </span>
             </div>
           </form>
+          <a href="/groupline/like_destroy">좋아요취소</a>
         </div>
         <% end %>
         <% @detail.replies.each do |p|%>
